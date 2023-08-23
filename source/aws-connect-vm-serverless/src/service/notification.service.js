@@ -130,13 +130,16 @@ class NotificationService {
      * @param {string} toEmailAddress
      * @param {DeliveryContent} deliveryContent
      */
-    sendMail(voicemail, fromEmailAddress, toEmailAddress, deliveryContent) {
+    sendMail(voicemail, fromEmailAddress, toEmailAddress, deliveryContent, queueName) {
         return new Promise((resolve, reject) => {
             let voicemailDate = new Date(voicemail.timestamp * 1000);
 
             // Date
             let html = `<p>${voicemailDate}</p>`;
             html += `<p>New voicemail from ${voicemail.contactPhoneNumber}.</p>`;
+
+            // Include Queue Name
+            html += '<b>Queue:</b><p>${queueName}</p>';
 
             // Transcript
             if (deliveryContent.transcription) {
